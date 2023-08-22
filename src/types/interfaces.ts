@@ -15,3 +15,9 @@ export interface IDecodedToken {
   iat: number;
   exp: number;
 }
+
+export interface IUser {
+  name: string;
+  email: string;
+  password: string;
+}
