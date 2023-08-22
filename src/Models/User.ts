@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import { IUser } from "../types/interfaces";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import "dotenv/config";
 
 const UserSchema = new mongoose.Schema<IUser>({
   name: {
@@ -32,10 +33,14 @@ UserSchema.pre<IUser>("save", async function () {
   this.password = hashedPass;
 });
 
-UserSchema.methods.createJWT = function (this: IUser) {
-  return jwt.sign({ userId: this._id, name: this.name }, "jwtSecret", {
-    expiresIn: "30d",
-  });
+UserSchema.methods.createJWT = function (this: IUser): string {
+  return jwt.sign(
+    { userId: this._id, name: this.name },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: process.env.JWT_LIFETIME,
+    }
+  );
 };
 
 export const User = mongoose.model<IUser>("User", UserSchema);
