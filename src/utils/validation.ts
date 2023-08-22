@@ -8,5 +8,10 @@ export const validateUserData = (userData: unknown) => {
     password: Joi.string().required(),
   });
 
-  return loginSchema.validate(userData, { errors: { wrap: { label: false } } });
+  return loginSchema.validate(userData, {
+    errors: { wrap: { label: false } },
+    messages: {
+      "any.required": "Please provide {#key}",
+    },
+  });
 };
