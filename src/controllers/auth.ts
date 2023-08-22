@@ -3,7 +3,7 @@ const register = async (_req: Request, res: Response) => {
   res.send("register user");
 };
 
-const login = async (req: Request, res: Response) => {
+const login = async (_req: Request, res: Response) => {
   res.send("register login");
 };
 
