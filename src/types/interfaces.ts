@@ -5,6 +5,10 @@ export interface IRegisterRequest extends Request {
   body: IUser;
 }
 
+export interface ILoginRequest extends Request {
+  body: ILogin;
+}
+
 export interface IUserMethods {
   createJWT(): string;
 }
@@ -12,6 +16,11 @@ export interface IUserMethods {
 export interface IUser extends Document, IUserMethods {
   _id: string;
   name: string;
+  email: string;
+  password: string;
+}
+
+export interface ILogin {
   email: string;
   password: string;
 }
