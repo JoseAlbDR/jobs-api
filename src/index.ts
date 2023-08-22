@@ -1,3 +1,4 @@
+import "express-async-errors";
 import express from "express";
 import notFoundMiddleware from "./middleware/not-found";
 import errorHandlerMiddleware from "./middleware/error-handler";
