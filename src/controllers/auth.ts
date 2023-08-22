@@ -5,8 +5,8 @@ import { User } from "../Models/User";
 
 const register = async (req: IRegisterRequest, res: Response) => {
   const user = await User.create(req.body);
-
-  res.status(StatusCodes.CREATED).json({ user });
+  const token = user.createJWT();
+  res.status(StatusCodes.CREATED).json({ user: { name: user.name }, token });
 };
 
 const login = async (_req: Request, res: Response) => {
