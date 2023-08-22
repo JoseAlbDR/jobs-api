@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { IUser } from "../types/interfaces";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 const UserSchema = new mongoose.Schema<IUser>({
   name: {
@@ -25,10 +26,16 @@ const UserSchema = new mongoose.Schema<IUser>({
   },
 });
 
-UserSchema.pre("save", async function () {
+UserSchema.pre<IUser>("save", async function () {
   const salt = await bcrypt.genSalt(10);
   const hashedPass = await bcrypt.hash(this.password, salt);
   this.password = hashedPass;
 });
+
+UserSchema.methods.createJWT = function (this: IUser) {
+  return jwt.sign({ userId: this._id, name: this.name }, "jwtSecret", {
+    expiresIn: "30d",
+  });
+};
 
 export const User = mongoose.model<IUser>("User", UserSchema);
