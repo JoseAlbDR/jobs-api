@@ -1,11 +1,8 @@
-import { ILoginBody } from "./interfaces";
-
 export {};
 
 declare global {
   namespace Express {
     interface Request {
-      loginQuery: ILoginBody;
       user: {
         id: number;
         username: string;
