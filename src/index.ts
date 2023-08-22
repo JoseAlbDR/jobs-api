@@ -2,6 +2,8 @@ import express from "express";
 import notFoundMiddleware from "./middleware/not-found";
 import errorHandlerMiddleware from "./middleware/error-handler";
 import dbConnect from "./db/connect";
+import authRouter from "./routes/auth";
+import jobsRouter from "./routes/jobs";
 
 const app = express();
 
@@ -12,6 +14,8 @@ app.get("/", (_req, res) => {
   res.send("Hello there!");
 });
 
+app.use("/api/v1/jobs", jobsRouter);
+app.use("/api/v1", authRouter);
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
