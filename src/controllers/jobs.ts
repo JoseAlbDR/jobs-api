@@ -1,17 +1,25 @@
 import { Response, Request } from "express";
-import { CustomRequest } from "../types/interfaces";
+import { CustomRequest, IJobIdRequest } from "../types/interfaces";
 import { StatusCodes } from "http-status-codes";
-// import { BadRequestError, NotFoundError } from "../errors";
 import { Job } from "../Models/Job";
 import { isCreateJobRequest } from "../utils/typeGuard";
+import { NotFoundError } from "../errors";
 
 const getAllJobs = async (req: Request, res: Response) => {
   const jobs = await Job.find({ createdBy: req.user.userId }).sort("createdAt");
   res.status(StatusCodes.OK).json({ jobs, count: jobs.length });
 };
 
-const getJob = async (_req: Request, res: Response) => {
-  res.send("get job");
+const getJob = async (req: IJobIdRequest, res: Response) => {
+  const { jobId } = req.params;
+  const { userId } = req.user;
+  const job = await Job.findOne({ _id: jobId, createdBy: userId });
+
+  if (!job) {
+    throw new NotFoundError(`No job with id ${jobId}`);
+  }
+
+  res.status(StatusCodes.OK).json({ job });
 };
 
 const createJob = async (req: CustomRequest, res: Response) => {
