@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
-import { IUser } from "../types/interfaces";
+import { IUser, IUserMethods, UserModel } from "../types/interfaces";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 
-const UserSchema = new mongoose.Schema<IUser>({
+const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>({
   name: {
     type: "string",
     required: [true, "Please provide name"],
@@ -43,4 +43,12 @@ UserSchema.methods.createJWT = function (this: IUser): string {
   );
 };
 
-export const User = mongoose.model<IUser>("User", UserSchema);
+UserSchema.methods.checkPassword = async function (
+  this: IUser,
+  candidatePassword: string
+) {
+  const isMatch = await bcrypt.compare(candidatePassword, this.password);
+  return isMatch;
+};
+
+export const User = mongoose.model<IUser, UserModel>("User", UserSchema);
