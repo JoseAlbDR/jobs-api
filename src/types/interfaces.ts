@@ -13,10 +13,19 @@ export interface IJobRequest extends Request {
   body: IJob;
 }
 
-export interface IJobIdRequest extends Request {
+export interface IJobIdRequest extends Request {}
+
+export interface IUpdateJobRequest extends Request {
   params: {
     jobId: string;
   };
+  body: IUpdateJob;
+}
+
+export interface IUpdateJob {
+  company?: string;
+  position?: string;
+  status?: "interview" | "declined" | "pending";
 }
 
 export type CustomRequest = IRegisterRequest | ILoginRequest | IJobRequest;
