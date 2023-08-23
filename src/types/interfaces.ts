@@ -13,6 +13,12 @@ export interface IJobRequest extends Request {
   body: IJob;
 }
 
+export interface IJobIdRequest extends Request {
+  params: {
+    jobId: string;
+  };
+}
+
 export type CustomRequest = IRegisterRequest | ILoginRequest | IJobRequest;
 
 export interface IUserMethods {
