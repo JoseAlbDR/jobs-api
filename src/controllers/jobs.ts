@@ -1,12 +1,11 @@
 import { Response, Request } from "express";
 import {
-  CustomRequest,
   IJobIdRequest,
+  IJobRequest,
   IUpdateJobRequest,
 } from "../types/interfaces";
 import { StatusCodes } from "http-status-codes";
 import { Job } from "../Models/Job";
-import { isCreateJobRequest } from "../utils/typeGuard";
 import { NotFoundError } from "../errors";
 
 const getAllJobs = async (req: Request, res: Response) => {
@@ -29,10 +28,10 @@ const getJob = async (req: IJobIdRequest, res: Response) => {
   res.status(StatusCodes.OK).json({ job });
 };
 
-const createJob = async (req: CustomRequest, res: Response) => {
-  if (isCreateJobRequest(req)) req.body.createdBy = req.user.userId;
+const createJob = async (req: IJobRequest, res: Response) => {
+  req.body.createdBy = req.user.userId;
   const job = await Job.create(req.body);
-  res.status(StatusCodes.OK).json({ job });
+  res.status(StatusCodes.CREATED).json({ job });
 };
 
 const updateJob = async (req: IUpdateJobRequest, res: Response) => {
@@ -56,8 +55,19 @@ const updateJob = async (req: IUpdateJobRequest, res: Response) => {
   res.status(StatusCodes.OK).json({ job });
 };
 
-const deleteJob = async (_req: Request, res: Response) => {
-  res.send("delete job");
+const deleteJob = async (req: IJobIdRequest, res: Response) => {
+  const {
+    user: { userId },
+    params: { jobId },
+  } = req;
+
+  const deleteResult = await Job.deleteOne({ _id: jobId, createdBy: userId });
+
+  if (!deleteResult.deletedCount) {
+    throw new NotFoundError(`Task with id ${jobId} does not exist`);
+  }
+
+  res.status(StatusCodes.OK).json({ deleteResult });
 };
 
 export { getAllJobs, getJob, updateJob, deleteJob, createJob };
