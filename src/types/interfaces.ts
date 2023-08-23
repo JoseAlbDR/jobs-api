@@ -1,5 +1,6 @@
 import { Request } from "express";
 import mongoose, { Model } from "mongoose";
+import { MongoError } from "mongodb";
 
 export interface IRegisterRequest extends Request {
   body: IUser;
@@ -68,4 +69,10 @@ export interface IJob {
   position: string;
   status?: "interview" | "declined" | "pending";
   createdBy?: mongoose.SchemaDefinitionProperty<mongoose.Types.ObjectId>;
+}
+
+export interface IMongoError extends MongoError {
+  keyValue: {
+    [x: string]: string;
+  };
 }
