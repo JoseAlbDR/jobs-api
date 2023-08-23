@@ -5,8 +5,9 @@ import { StatusCodes } from "http-status-codes";
 import { Job } from "../Models/Job";
 import { isCreateJobRequest } from "../utils/typeGuard";
 
-const getAllJobs = async (_req: Request, res: Response) => {
-  res.send("get all jobs");
+const getAllJobs = async (req: Request, res: Response) => {
+  const jobs = await Job.find({ createdBy: req.user.userId }).sort("createdAt");
+  res.status(StatusCodes.OK).json({ jobs, count: jobs.length });
 };
 
 const getJob = async (_req: Request, res: Response) => {
