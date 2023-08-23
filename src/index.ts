@@ -5,12 +5,12 @@ import errorHandlerMiddleware from "./middleware/error-handler";
 import dbConnect from "./db/connect";
 import authRouter from "./routes/auth";
 import jobsRouter from "./routes/jobs";
-
+import authenticateUser from "./middleware/authentication";
 const app = express();
 
 // middleware
 app.use(express.json());
-app.use("/api/v1/jobs", jobsRouter);
+app.use("/api/v1/jobs", authenticateUser, jobsRouter);
 app.use("/api/v1/auth", authRouter);
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
