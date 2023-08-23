@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { Model } from "mongoose";
+import mongoose, { Model } from "mongoose";
 
 export interface IRegisterRequest extends Request {
   body: IUser;
@@ -40,4 +40,11 @@ export interface IDecodedToken {
   username: string;
   iat: number;
   exp: number;
+}
+
+export interface IJob {
+  company: string;
+  position: string;
+  status: "interview" | "declined" | "pending";
+  createdBy: mongoose.SchemaDefinitionProperty<mongoose.Types.ObjectId>;
 }
