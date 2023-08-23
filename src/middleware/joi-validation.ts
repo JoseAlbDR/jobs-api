@@ -3,24 +3,33 @@ import {
   validateLoginData,
   validateRegisterData,
 } from "../utils/authValidation";
-import { ILoginRequest, IRegisterRequest } from "../types/interfaces";
+import { CustomRequest } from "../types/interfaces";
 import { BadRequestError } from "../errors";
+import { validateJobData } from "../utils/jobsValidation";
+import {
+  isCreateJobRequest,
+  isRegisterRequest,
+  isLoginRequest,
+} from "../utils/typeGuard";
 
 const validateBody = (
-  req: IRegisterRequest | ILoginRequest,
+  req: CustomRequest,
   _res: Response,
   next: NextFunction
 ) => {
-  const { body } = req;
-
   let valid:
     | ReturnType<typeof validateRegisterData>
-    | ReturnType<typeof validateLoginData>;
+    | ReturnType<typeof validateLoginData>
+    | ReturnType<typeof validateJobData>;
 
-  if ("name" in body) {
-    valid = validateRegisterData(body);
+  if (isRegisterRequest(req)) {
+    valid = validateRegisterData(req.body);
+  } else if (isCreateJobRequest(req)) {
+    valid = validateJobData(req.body);
+  } else if (isLoginRequest(req)) {
+    valid = validateLoginData(req.body);
   } else {
-    valid = validateLoginData(body);
+    throw new BadRequestError("Missing required parameters");
   }
 
   if (valid.error) {
