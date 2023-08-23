@@ -1,5 +1,9 @@
 import { Response, Request } from "express";
-import { CustomRequest, IJobIdRequest } from "../types/interfaces";
+import {
+  CustomRequest,
+  IJobIdRequest,
+  IUpdateJobRequest,
+} from "../types/interfaces";
 import { StatusCodes } from "http-status-codes";
 import { Job } from "../Models/Job";
 import { isCreateJobRequest } from "../utils/typeGuard";
@@ -11,8 +15,11 @@ const getAllJobs = async (req: Request, res: Response) => {
 };
 
 const getJob = async (req: IJobIdRequest, res: Response) => {
-  const { jobId } = req.params;
-  const { userId } = req.user;
+  const {
+    user: { userId },
+    params: { jobId },
+  } = req;
+
   const job = await Job.findOne({ _id: jobId, createdBy: userId });
 
   if (!job) {
@@ -28,8 +35,25 @@ const createJob = async (req: CustomRequest, res: Response) => {
   res.status(StatusCodes.OK).json({ job });
 };
 
-const updateJob = async (_req: Request, res: Response) => {
-  res.send("update job");
+const updateJob = async (req: IUpdateJobRequest, res: Response) => {
+  const {
+    user: { userId },
+    params: { jobId },
+  } = req;
+
+  const jobChanges = req.body;
+
+  const job = await Job.findOneAndUpdate(
+    { _id: jobId, createdBy: userId },
+    jobChanges,
+    { new: true, runValidators: true }
+  );
+
+  if (!job) {
+    throw new NotFoundError(`No job with id ${jobId}`);
+  }
+
+  res.status(StatusCodes.OK).json({ job });
 };
 
 const deleteJob = async (_req: Request, res: Response) => {
