@@ -11,6 +11,6 @@ import {
 const router = express.Router();
 
 router.route("/").get(getAllJobs).post(validateBody, createJob);
-router.route("/:jobID").post(getJob).patch(updateJob).delete(deleteJob);
+router.route("/:jobId").get(getJob).patch(updateJob).delete(deleteJob);
 
 export default router;
