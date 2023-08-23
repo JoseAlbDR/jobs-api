@@ -34,3 +34,10 @@ export interface IDecodedToken {
   iat: number;
   exp: number;
 }
+
+export interface IDecodedToken {
+  userId: string;
+  username: string;
+  iat: number;
+  exp: number;
+}
