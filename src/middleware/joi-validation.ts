@@ -1,5 +1,8 @@
 import { NextFunction, Response } from "express";
-import { validateLoginData, validateRegisterData } from "../utils/validation";
+import {
+  validateLoginData,
+  validateRegisterData,
+} from "../utils/authValidation";
 import { ILoginRequest, IRegisterRequest } from "../types/interfaces";
 import { BadRequestError } from "../errors";
 
