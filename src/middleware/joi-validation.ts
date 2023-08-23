@@ -29,7 +29,7 @@ const validateBody = (
   } else if (isLoginRequest(req)) {
     valid = validateLoginData(req.body);
   } else {
-    throw new BadRequestError("Missing required parameters");
+    throw new BadRequestError("Missing required fields");
   }
 
   if (valid.error) {
