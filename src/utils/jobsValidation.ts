@@ -8,7 +8,7 @@ export const validateJobData = (jobData: unknown) => {
     status: Joi.string(),
     // .valid("interview", "declined", "pending")
     // .default("pending"),
-    createdBy: Joi.string().hex().length(24).required(),
+    createdBy: Joi.string().hex().length(24),
   });
 
   return jobSchema.validate(jobData, {
