@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { Document } from "mongoose";
+import { Model } from "mongoose";
 
 export interface IRegisterRequest extends Request {
   body: IUser;
@@ -11,9 +11,12 @@ export interface ILoginRequest extends Request {
 
 export interface IUserMethods {
   createJWT(): string;
+  checkPassword(candidatePassword: string): Promise<boolean>;
 }
 
-export interface IUser extends Document, IUserMethods {
+export type UserModel = Model<IUser, { [_ in never]: never }, IUserMethods>;
+
+export interface IUser {
   _id: string;
   name: string;
   email: string;
