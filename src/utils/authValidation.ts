@@ -20,7 +20,7 @@ export const validateLoginData = (loginData: unknown) => {
   const pattern =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   const loginSchema = Joi.object<ILogin>({
-    email: Joi.string().pattern(new RegExp(pattern)).required(),
+    loginEmail: Joi.string().pattern(new RegExp(pattern)).required(),
     password: Joi.string().min(6).required(),
   });
 

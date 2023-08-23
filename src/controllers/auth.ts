@@ -11,8 +11,8 @@ const register = async (req: IRegisterRequest, res: Response) => {
 };
 
 const login = async (req: ILoginRequest, res: Response) => {
-  const { email, password } = req.body;
-  const user = await User.findOne({ email });
+  const { loginEmail, password } = req.body;
+  const user = await User.findOne({ email: loginEmail });
 
   if (!user) {
     throw new UnauthenticatedError("Invalid email");
