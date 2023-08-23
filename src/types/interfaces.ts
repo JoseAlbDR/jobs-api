@@ -9,6 +9,12 @@ export interface ILoginRequest extends Request {
   body: ILogin;
 }
 
+export interface IJobRequest extends Request {
+  body: IJob;
+}
+
+export type CustomRequest = IRegisterRequest | ILoginRequest | IJobRequest;
+
 export interface IUserMethods {
   createJWT(): string;
   checkPassword(candidatePassword: string): Promise<boolean>;
@@ -24,7 +30,7 @@ export interface IUser {
 }
 
 export interface ILogin {
-  email: string;
+  loginEmail: string;
   password: string;
 }
 
@@ -45,6 +51,6 @@ export interface IDecodedToken {
 export interface IJob {
   company: string;
   position: string;
-  status: "interview" | "declined" | "pending";
-  createdBy: mongoose.SchemaDefinitionProperty<mongoose.Types.ObjectId>;
+  status?: "interview" | "declined" | "pending";
+  createdBy?: mongoose.SchemaDefinitionProperty<mongoose.Types.ObjectId>;
 }
