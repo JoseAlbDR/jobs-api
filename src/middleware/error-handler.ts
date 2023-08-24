@@ -10,22 +10,9 @@ const errorHandlerMiddleware = (
   res: Response,
   _next: NextFunction
 ) => {
-  // const customError: ICustomError = {
-  //   // set default
-  //   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  //   statusCode: err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
-  //   msg: err.message || "Something went wrong try again later",
-  // };
-
   if (err instanceof CustomAPIError) {
     return res.status(err.statusCode).json({ msg: err.message });
   }
-
-  // if ((err as MongoError).code === 11000) {
-  //   return res
-  //     .status(StatusCodes.CONFLICT)
-  //     .json({ msg: `Duplicate value entered for ${err.keyValue}`, err });
-  // }
 
   if (err instanceof MongoError && err.code === 11000) {
     return res.status(StatusCodes.BAD_REQUEST).json({
@@ -35,7 +22,6 @@ const errorHandlerMiddleware = (
     });
   }
   return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err });
-  // return res.status(customError.statusCode).json({ msg: customError.msg });
 };
 
 export default errorHandlerMiddleware;
