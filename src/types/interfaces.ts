@@ -95,3 +95,8 @@ export interface IRequiredMongoError extends MongoError {
       | { [y: string]: { [z: string]: string } };
   };
 }
+
+export interface ICastMongoError extends MongoError {
+  reason: { [x: string]: string };
+  value: string;
+}
