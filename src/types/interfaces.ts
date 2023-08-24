@@ -82,8 +82,16 @@ export interface IUpdateJob {
   status?: "interview" | "declined" | "pending";
 }
 
-export interface IMongoError extends MongoError {
+export interface IDuplicateMongoError extends MongoError {
   keyValue: {
     [x: string]: string;
+  };
+}
+
+export interface IRequiredMongoError extends MongoError {
+  errors: {
+    [x: string]:
+      | { [y: string]: string }
+      | { [y: string]: { [z: string]: string } };
   };
 }
