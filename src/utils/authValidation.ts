@@ -1,7 +1,7 @@
 import Joi from "joi";
-import { ILogin, IUser } from "../types/interfaces";
+import { CustomBody, ILogin, IUser } from "../types/interfaces";
 
-export const validateRegisterData = (data: unknown) => {
+export const validateRegisterData = <T extends CustomBody>(data: T) => {
   const registerSchema = Joi.object<IUser>({
     name: Joi.string().required(),
     email: Joi.string().required(),
@@ -16,7 +16,7 @@ export const validateRegisterData = (data: unknown) => {
   });
 };
 
-export const validateLoginData = (data: unknown) => {
+export const validateLoginData = <T extends CustomBody>(data: T) => {
   const pattern =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   const loginSchema = Joi.object<ILogin>({
