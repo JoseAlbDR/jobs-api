@@ -26,6 +26,7 @@ export const validateLoginData = <T extends CustomBody>(data: T) => {
     errors: { wrap: { label: false } },
     messages: {
       "object.unknown": "Unknown parameter: {#key}",
+      "any.required": "Please provide {#key}",
     },
   });
 };
