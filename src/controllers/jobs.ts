@@ -49,7 +49,7 @@ const updateJob = async (req: IUpdateJobRequest, res: Response) => {
   );
 
   if (!job) {
-    throw new NotFoundError(`No job with id ${jobId}`);
+    throw new NotFoundError(`No item found with id ${jobId}`);
   }
 
   res.status(StatusCodes.OK).json({ job });

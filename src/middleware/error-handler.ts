@@ -29,7 +29,7 @@ const errorHandlerMiddleware = (
 
   if (err.name === "CastError") {
     const { value } = err as ICastMongoError;
-    const msg = `No item found with id: ${value}`;
+    const msg = `No item found with id: ${value}, ID passed in must be a string of 12 bytes or a string of 24 hex characters or an integer`;
     return res.status(StatusCodes.NOT_FOUND).json({ msg });
   }
 
