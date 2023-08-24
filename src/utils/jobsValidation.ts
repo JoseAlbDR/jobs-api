@@ -6,8 +6,6 @@ export const validateCreateJobData = <T extends CustomBody>(data: T) => {
     company: Joi.string().required(),
     position: Joi.string().required(),
     status: Joi.string(),
-    // .valid("interview", "declined", "pending")
-    // .default("pending"),
     createdBy: Joi.string().hex().length(24),
   });
 

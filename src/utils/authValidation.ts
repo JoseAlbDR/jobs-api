@@ -9,7 +9,7 @@ export const validateRegisterData = <T extends CustomBody>(data: T) => {
   });
 
   return registerSchema.validate(data, {
-    errors: { label: false }, // Removed unnecessary 'wrap' property
+    errors: { wrap: { label: false } },
     messages: {
       "any.required": "Please provide {#key}",
     },
@@ -25,8 +25,9 @@ export const validateLoginData = <T extends CustomBody>(data: T) => {
   });
 
   return loginSchema.validate(data, {
-    errors: { label: false }, // Removed unnecessary 'wrap' property
+    errors: { wrap: { label: false } },
     messages: {
+      "object.unknown": "Unknown parameter: {#key}",
       "any.required": "Please provide {#key}.",
       "string.pattern.base": "Please provide a valid email.",
     },
