@@ -69,17 +69,19 @@ export interface IDecodedToken {
   exp: number;
 }
 
+type StatusTypes = "interview" | "declined" | "pending";
+
 export interface IJob {
   company: string;
   position: string;
-  status?: "interview" | "declined" | "pending";
+  status?: StatusTypes;
   createdBy?: mongoose.SchemaDefinitionProperty<mongoose.Types.ObjectId>;
 }
 
 export interface IUpdateJob {
   company?: string;
   position?: string;
-  status?: "interview" | "declined" | "pending";
+  status?: StatusTypes;
 }
 
 export interface IDuplicateMongoError extends MongoError {
