@@ -214,13 +214,21 @@ components:
         position: full stack developer
     UpdateJobRequest:
       title: UpdateJobRequest
-      required:
+      optional:
+        - company
+        - position
         - status
       type: object
       properties:
+        company:
+          type: string
+        position:
+          type: string
         status:
           type: string
       example:
+        company: netflix
+        position: backend developer
         status: interview
   securitySchemes:
     bearer:
