@@ -30,6 +30,7 @@ export interface IUpdateJob {
 }
 
 export type CustomRequest = IRegisterRequest | ILoginRequest | IJobRequest;
+export type CustomBody = ILogin | IUser | IJob;
 
 export interface IUserMethods {
   createJWT(): string;
