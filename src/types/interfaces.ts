@@ -29,7 +29,11 @@ export interface IUpdateJob {
   status?: "interview" | "declined" | "pending";
 }
 
-export type CustomRequest = IRegisterRequest | ILoginRequest | IJobRequest;
+export type CustomRequest =
+  | IRegisterRequest
+  | ILoginRequest
+  | IJobRequest
+  | IUpdateJobRequest;
 export type CustomBody = ILogin | IUser | IJob | IUpdateJob;
 
 export interface IUserMethods {
