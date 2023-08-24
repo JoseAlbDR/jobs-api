@@ -1,17 +1,11 @@
 import { NextFunction, Response } from "express";
-import {
-  CustomBody,
-  CustomRequest,
-  IJob,
-  ILogin,
-  IUser,
-} from "../types/interfaces";
+import { CustomBody, CustomRequest } from "../types/interfaces";
 import { BadRequestError } from "../errors";
 import Joi from "joi";
 
 type ValidationFunction = <T extends CustomBody>(
   data: T
-) => Joi.ValidationResult<IUser | ILogin | IJob>;
+) => Joi.ValidationResult<CustomBody>;
 
 const validateBody =
   (validationFunction: ValidationFunction) =>
@@ -26,7 +20,7 @@ const validateBody =
     }
 
     req.body = valid.value;
-    return next();
+    next();
   };
 
 export default validateBody;
