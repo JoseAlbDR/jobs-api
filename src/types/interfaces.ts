@@ -46,7 +46,7 @@ export interface IUser {
 }
 
 export interface ILogin {
-  loginEmail: string;
+  email: string;
   password: string;
 }
 
