@@ -1,7 +1,7 @@
 import Joi from "joi";
 import { IJob } from "../types/interfaces";
 
-export const validateJobData = (jobData: unknown) => {
+export const validateCreateJobData = (data: unknown) => {
   const jobSchema = Joi.object<IJob>({
     company: Joi.string().required(),
     position: Joi.string().required(),
@@ -11,10 +11,26 @@ export const validateJobData = (jobData: unknown) => {
     createdBy: Joi.string().hex().length(24),
   });
 
-  return jobSchema.validate(jobData, {
+  return jobSchema.validate(data, {
     errors: { wrap: { label: false } },
     messages: {
       "any.required": "Please provide {#key}",
+    },
+  });
+};
+
+export const validateUpdateJobData = (data: unknown) => {
+  const jobSchema = Joi.object<IJob>({
+    company: Joi.string(),
+    position: Joi.string(),
+    status: Joi.string(),
+  });
+
+  return jobSchema.validate(data, {
+    errors: { wrap: { label: false } },
+    messages: {
+      "any.required": "Please provide {#key}",
+      "object.unknown": "Unknown parameter: {#key}",
     },
   });
 };

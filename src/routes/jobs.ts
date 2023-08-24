@@ -7,14 +7,21 @@ import {
   updateJob,
   createJob,
 } from "../controllers/jobs";
-import { validateJobData } from "../utils/jobsValidation";
+import {
+  validateCreateJobData,
+  validateUpdateJobData,
+} from "../utils/jobsValidation";
 
 const router = express.Router();
 
 router
   .route("/")
   .get(getAllJobs)
-  .post(validateBody(validateJobData), createJob);
-router.route("/:jobId").get(getJob).patch(updateJob).delete(deleteJob);
+  .post(validateBody(validateCreateJobData), createJob);
+router
+  .route("/:jobId")
+  .get(getJob)
+  .patch(validateBody(validateUpdateJobData), updateJob)
+  .delete(deleteJob);
 
 export default router;
