@@ -1,46 +1,26 @@
 import { NextFunction, Response } from "express";
-import {
-  validateLoginData,
-  validateRegisterData,
-} from "../utils/authValidation";
-import { CustomRequest } from "../types/interfaces";
+import { CustomRequest, IJob, ILogin, IUser } from "../types/interfaces";
 import { BadRequestError } from "../errors";
-import { validateJobData } from "../utils/jobsValidation";
-import {
-  isCreateJobRequest,
-  isRegisterRequest,
-  isLoginRequest,
-} from "../utils/typeGuard";
+import Joi from "joi";
 
-const validateBody = (
-  req: CustomRequest,
-  _res: Response,
-  next: NextFunction
-) => {
-  let valid:
-    | ReturnType<typeof validateRegisterData>
-    | ReturnType<typeof validateLoginData>
-    | ReturnType<typeof validateJobData>;
+type ValidationFunction = (
+  data: unknown
+) => Joi.ValidationResult<IUser | ILogin | IJob>;
 
-  if (isRegisterRequest(req)) {
-    valid = validateRegisterData(req.body);
-  } else if (isCreateJobRequest(req)) {
-    valid = validateJobData(req.body);
-  } else if (isLoginRequest(req)) {
-    valid = validateLoginData(req.body);
-  } else {
-    throw new BadRequestError("Missing required fields");
-  }
+const validateBody =
+  (validationFunction: ValidationFunction) =>
+  (req: CustomRequest, _res: Response, next: NextFunction) => {
+    const valid = validationFunction(req.body);
 
-  if (valid.error) {
-    const messages = valid.error.details.map(
-      (detail): string => detail.message
-    );
-    throw new BadRequestError(messages.join(" "));
-  }
+    if (valid.error) {
+      const messages = valid.error.details.map(
+        (detail): string => detail.message
+      );
+      throw new BadRequestError(messages.join(" "));
+    }
 
-  req.body = valid.value;
-  return next();
-};
+    req.body = valid.value;
+    return next();
+  };
 
 export default validateBody;
