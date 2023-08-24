@@ -1,7 +1,7 @@
 import Joi from "joi";
-import { IJob } from "../types/interfaces";
+import { CustomBody, IJob } from "../types/interfaces";
 
-export const validateCreateJobData = (data: unknown) => {
+export const validateCreateJobData = <T extends CustomBody>(data: T) => {
   const jobSchema = Joi.object<IJob>({
     company: Joi.string().required(),
     position: Joi.string().required(),
@@ -19,7 +19,7 @@ export const validateCreateJobData = (data: unknown) => {
   });
 };
 
-export const validateUpdateJobData = (data: unknown) => {
+export const validateUpdateJobData = <T extends CustomBody>(data: T) => {
   const jobSchema = Joi.object<IJob>({
     company: Joi.string(),
     position: Joi.string(),

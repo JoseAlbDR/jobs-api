@@ -30,7 +30,7 @@ export interface IUpdateJob {
 }
 
 export type CustomRequest = IRegisterRequest | ILoginRequest | IJobRequest;
-export type CustomBody = ILogin | IUser | IJob;
+export type CustomBody = ILogin | IUser | IJob | IUpdateJob;
 
 export interface IUserMethods {
   createJWT(): string;
@@ -70,6 +70,12 @@ export interface IJob {
   position: string;
   status?: "interview" | "declined" | "pending";
   createdBy?: mongoose.SchemaDefinitionProperty<mongoose.Types.ObjectId>;
+}
+
+export interface IUpdateJob {
+  company?: string;
+  position?: string;
+  status?: "interview" | "declined" | "pending";
 }
 
 export interface IMongoError extends MongoError {
