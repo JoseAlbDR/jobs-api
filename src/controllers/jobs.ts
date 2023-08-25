@@ -1,8 +1,8 @@
 import { Response, Request } from "express";
 import {
   IJobIdRequest,
-  IJobQuery,
   IJobRequest,
+  IMongoJobQuery,
   IUpdateJobRequest,
 } from "../types/interfaces";
 import { StatusCodes } from "http-status-codes";
@@ -10,22 +10,25 @@ import { Job } from "../Models/Job";
 import { NotFoundError } from "../errors";
 
 const getAllJobs = async (req: Request, res: Response) => {
-  const queryObject: IJobQuery = {};
+  const { search, status } = req.jobQuery;
 
-  console.log(req.jobQuery);
+  const queryObject: IMongoJobQuery = {
+    createdBy: req.user.userId,
+  };
 
-  if (req.jobQuery.search && typeof req.jobQuery.search === "string") {
+  if (search) {
     queryObject.position = {
-      $regex: req.jobQuery.search,
+      $regex: search,
       $options: "i",
     };
   }
 
-  const jobs = await Job.find({
-    createdBy: req.user.userId,
-    ...queryObject,
-  }).sort("createdAt");
+  if (status) {
+    queryObject.status = status;
+  }
 
+  const result = Job.find(queryObject);
+  const jobs = await result;
   res.status(StatusCodes.OK).json({ jobs });
 };
 
