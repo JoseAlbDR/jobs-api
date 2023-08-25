@@ -63,8 +63,9 @@ const updateUser = async (req: IUpdateUserRequest, res: Response) => {
   if (!user) {
     throw new NotFoundError(`No item found with id ${userId}`);
   }
+  const token = user.createJWT();
 
-  res.status(StatusCodes.OK).json({ user });
+  res.status(StatusCodes.OK).json({ ...user, token });
 };
 
 export { register, login, updateUser };
