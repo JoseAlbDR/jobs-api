@@ -1,5 +1,5 @@
 import express from "express";
-import validateBody from "../middleware/joi-validation";
+
 import {
   getAllJobs,
   getJob,
@@ -11,12 +11,13 @@ import {
   validateCreateJobData,
   validateUpdateJobData,
 } from "../utils/jobsValidation";
+import { validateBody, validateQuery } from "../middleware/joi-validation";
 
 const router = express.Router();
 
 router
   .route("/")
-  .get(getAllJobs)
+  .get(validateQuery, getAllJobs)
   .post(validateBody(validateCreateJobData), createJob);
 router
   .route("/:jobId")
