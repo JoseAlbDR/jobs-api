@@ -55,17 +55,30 @@ const updateUser = async (req: IUpdateUserRequest, res: Response) => {
 
   const userChanges = req.body;
 
-  const user = await User.findOneAndUpdate({ _id: userId }, userChanges, {
-    new: true,
-    runValidators: true,
-  });
+  const updatedUser = await User.findOneAndUpdate(
+    { _id: userId },
+    userChanges,
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
 
-  if (!user) {
+  if (!updatedUser) {
     throw new NotFoundError(`No item found with id ${userId}`);
   }
-  const token = user.createJWT();
 
-  res.status(StatusCodes.OK).json({ ...user, token });
+  const token = updatedUser.createJWT();
+
+  const user = {
+    name: updatedUser.name,
+    email: updatedUser.email,
+    lastName: updatedUser.lastName,
+    location: updatedUser.location,
+    token,
+  };
+
+  res.status(StatusCodes.OK).json({ user });
 };
 
 export { register, login, updateUser };
