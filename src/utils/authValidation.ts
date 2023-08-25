@@ -1,7 +1,7 @@
 import Joi from "joi";
-import { CustomBody, ILogin, IUpdateUser, IUser } from "../types/interfaces";
+import { ILogin, IUpdateUser, IUser } from "../types/interfaces";
 
-export const validateRegisterData = <T extends CustomBody>(data: T) => {
+export const validateRegisterData = (data: unknown) => {
   const registerSchema = Joi.object<IUser>({
     name: Joi.string(),
     email: Joi.string(),
@@ -16,7 +16,7 @@ export const validateRegisterData = <T extends CustomBody>(data: T) => {
   });
 };
 
-export const validateLoginData = <T extends CustomBody>(data: T) => {
+export const validateLoginData = (data: unknown) => {
   const loginSchema = Joi.object<ILogin>({
     email: Joi.string().required(),
     password: Joi.string().required(),
@@ -31,7 +31,7 @@ export const validateLoginData = <T extends CustomBody>(data: T) => {
   });
 };
 
-export const validateUpdateUserData = <T extends CustomBody>(data: T) => {
+export const validateUpdateUserData = (data: unknown) => {
   const jobSchema = Joi.object<IUpdateUser>({
     name: Joi.string(),
     lastName: Joi.string(),
