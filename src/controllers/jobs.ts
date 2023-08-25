@@ -1,6 +1,7 @@
 import { Response, Request } from "express";
 import {
   IJobIdRequest,
+  IJobQuery,
   IJobRequest,
   IUpdateJobRequest,
 } from "../types/interfaces";
@@ -9,8 +10,23 @@ import { Job } from "../Models/Job";
 import { NotFoundError } from "../errors";
 
 const getAllJobs = async (req: Request, res: Response) => {
-  const jobs = await Job.find({ createdBy: req.user.userId }).sort("createdAt");
-  res.status(StatusCodes.OK).json({ jobs, count: jobs.length });
+  const queryObject: IJobQuery = {};
+
+  console.log(req.jobQuery);
+
+  if (req.jobQuery.search && typeof req.jobQuery.search === "string") {
+    queryObject.position = {
+      $regex: req.jobQuery.search,
+      $options: "i",
+    };
+  }
+
+  const jobs = await Job.find({
+    createdBy: req.user.userId,
+    ...queryObject,
+  }).sort("createdAt");
+
+  res.status(StatusCodes.OK).json({ jobs });
 };
 
 const getJob = async (req: IJobIdRequest, res: Response) => {
