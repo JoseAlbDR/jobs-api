@@ -48,6 +48,8 @@ export interface IUser {
   name: string;
   email: string;
   password: string;
+  lastName?: string;
+  location?: string;
 }
 
 export interface ILogin {
