@@ -62,6 +62,7 @@ export interface IJob {
   status?: StatusTypes;
   jobType?: JobTypes;
   createdBy?: mongoose.SchemaDefinitionProperty<mongoose.Types.ObjectId>;
+  createdAt?: string;
 }
 
 export interface IUpdateJobRequest extends Request {
