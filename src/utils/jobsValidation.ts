@@ -6,6 +6,8 @@ export const validateCreateJobData = <T extends CustomBody>(data: T) => {
     company: Joi.string(),
     position: Joi.string(),
     status: Joi.string(),
+    jobLocation: Joi.string(),
+    jobType: Joi.string(),
     createdBy: Joi.string().hex().length(24),
   });
 
