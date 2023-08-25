@@ -93,7 +93,7 @@ export type IJobPosition = {
 export interface IJobQuery {
   search?: string;
   status?: "all" | StatusTypes;
-  jobType?: string;
+  jobType?: "all" | JobTypes;
   sort?: string;
   page?: number;
 }
