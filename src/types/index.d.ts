@@ -1,8 +1,11 @@
+import { IJobQuery } from "./interfaces";
+
 export {};
 
 declare global {
   namespace Express {
     interface Request {
+      jobQuery: IJobQuery;
       user: {
         userId: string;
         username: string;
