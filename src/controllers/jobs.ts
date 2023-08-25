@@ -10,7 +10,7 @@ import { Job } from "../Models/Job";
 import { NotFoundError } from "../errors";
 
 const getAllJobs = async (req: Request, res: Response) => {
-  const { search, status } = req.jobQuery;
+  const { search, status, jobType } = req.jobQuery;
 
   const queryObject: IMongoJobQuery = {
     createdBy: req.user.userId,
@@ -23,11 +23,16 @@ const getAllJobs = async (req: Request, res: Response) => {
     };
   }
 
-  if (status) {
+  if (status && status !== "all") {
     queryObject.status = status;
   }
 
+  if (jobType && jobType !== "all") {
+    queryObject.jobType = jobType;
+  }
+
   const result = Job.find(queryObject);
+  console.log(result);
   const jobs = await result;
   res.status(StatusCodes.OK).json({ jobs });
 };
