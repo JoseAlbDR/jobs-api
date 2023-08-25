@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { CustomBody, ILogin, IUser } from "../types/interfaces";
+import { CustomBody, ILogin, IUpdateUser, IUser } from "../types/interfaces";
 
 export const validateRegisterData = <T extends CustomBody>(data: T) => {
   const registerSchema = Joi.object<IUser>({
@@ -27,6 +27,23 @@ export const validateLoginData = <T extends CustomBody>(data: T) => {
     messages: {
       "object.unknown": "Unknown parameter: {#key}",
       "any.required": "Please provide {#key}",
+    },
+  });
+};
+
+export const validateUpdateUserData = <T extends CustomBody>(data: T) => {
+  const jobSchema = Joi.object<IUpdateUser>({
+    name: Joi.string(),
+    lastName: Joi.string(),
+    email: Joi.string(),
+    location: Joi.string(),
+  });
+
+  return jobSchema.validate(data, {
+    errors: { wrap: { label: false } },
+    messages: {
+      "any.required": "Please provide {#key}",
+      "object.unknown": "Unknown parameter: {#key}",
     },
   });
 };
