@@ -7,7 +7,15 @@ import { UnauthenticatedError } from "../errors";
 const register = async (req: IRegisterRequest, res: Response) => {
   const user = await User.create(req.body);
   const token = user.createJWT();
-  res.status(StatusCodes.CREATED).json({ user: { name: user.name }, token });
+  res.status(StatusCodes.CREATED).json({
+    user: {
+      name: user.name,
+      email: user.email,
+      lastName: user.lastName,
+      location: user.location,
+      token,
+    },
+  });
 };
 
 const login = async (req: ILoginRequest, res: Response) => {
@@ -25,7 +33,7 @@ const login = async (req: ILoginRequest, res: Response) => {
   }
 
   const token = user.createJWT();
-  res.status(StatusCodes.OK).json({ user: { name: user.name }, token });
+  res.status(StatusCodes.OK).json({ user: { name: user.name, token } });
 };
 
 export { register, login };
