@@ -39,7 +39,8 @@ const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>({
   },
 });
 
-UserSchema.pre<IUser>("save", async function () {
+UserSchema.pre("save", async function () {
+  console.log(this.modifiedPaths());
   const salt = await bcrypt.genSalt(10);
   const hashedPass = await bcrypt.hash(this.password, salt);
   this.password = hashedPass;
