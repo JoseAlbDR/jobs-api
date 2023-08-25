@@ -2,25 +2,25 @@ import { Request } from "express";
 import mongoose, { Model } from "mongoose";
 import { MongoError } from "mongodb";
 
+// User interfaces
+export type UserModel = Model<IUser, { [_ in never]: never }, IUserMethods>;
+
+export interface IUserMethods {
+  createJWT(): string;
+  checkPassword(candidatePassword: string): Promise<boolean>;
+}
+
 export interface IRegisterRequest extends Request {
   body: IUser;
 }
 
-export interface ILoginRequest extends Request {
-  body: ILogin;
-}
-
-export interface IJobRequest extends Request {
-  body: IJob;
-}
-
-export interface IJobIdRequest extends Request {}
-
-export interface IUpdateJobRequest extends Request {
-  params: {
-    jobId: string;
-  };
-  body: IUpdateJob;
+export interface IUser {
+  _id: string;
+  name: string;
+  email: string;
+  password: string;
+  lastName?: string;
+  location?: string;
 }
 
 export interface IUpdateUserRequest extends Request {
@@ -34,35 +34,9 @@ export interface IUpdateUser {
   location?: string;
 }
 
-export interface IUpdateJob {
-  company?: string;
-  position?: string;
-  status?: "interview" | "declined" | "pending";
-}
-
-export type CustomRequest =
-  | IRegisterRequest
-  | ILoginRequest
-  | IJobRequest
-  | IUpdateJobRequest
-  | IUpdateUser;
-
-export type CustomBody = ILogin | IUser | IJob | IUpdateJob | IUpdateUser;
-
-export interface IUserMethods {
-  createJWT(): string;
-  checkPassword(candidatePassword: string): Promise<boolean>;
-}
-
-export type UserModel = Model<IUser, { [_ in never]: never }, IUserMethods>;
-
-export interface IUser {
-  _id: string;
-  name: string;
-  email: string;
-  password: string;
-  lastName?: string;
-  location?: string;
+// Auth interfaces
+export interface ILoginRequest extends Request {
+  body: ILogin;
 }
 
 export interface ILogin {
@@ -70,6 +44,50 @@ export interface ILogin {
   password: string;
 }
 
+// Job interfaces
+export interface IJobIdRequest extends Request {
+  params: {
+    jobId: string;
+  };
+}
+
+export interface IJobRequest extends Request {
+  body: IJob;
+}
+
+export interface IJob {
+  company: string;
+  position: string;
+  status?: StatusTypes;
+  createdBy?: mongoose.SchemaDefinitionProperty<mongoose.Types.ObjectId>;
+}
+
+export interface IUpdateJobRequest extends Request {
+  params: {
+    jobId: string;
+  };
+  body: IUpdateJob;
+}
+
+export interface IUpdateJob {
+  company?: string;
+  position?: string;
+  status?: StatusTypes;
+}
+
+type StatusTypes = "interview" | "declined" | "pending";
+
+// Validation interfaces
+export type CustomRequest =
+  | IRegisterRequest
+  | ILoginRequest
+  | IJobRequest
+  | IUpdateJobRequest
+  | IUpdateUserRequest;
+
+export type CustomBody = ILogin | IUser | IJob | IUpdateJob | IUpdateUser;
+
+// JWT interfaces
 export interface IDecodedToken {
   id: number;
   username: string;
@@ -84,21 +102,7 @@ export interface IDecodedToken {
   exp: number;
 }
 
-type StatusTypes = "interview" | "declined" | "pending";
-
-export interface IJob {
-  company: string;
-  position: string;
-  status?: StatusTypes;
-  createdBy?: mongoose.SchemaDefinitionProperty<mongoose.Types.ObjectId>;
-}
-
-export interface IUpdateJob {
-  company?: string;
-  position?: string;
-  status?: StatusTypes;
-}
-
+// Error interfaces
 export interface IDuplicateMongoError extends MongoError {
   keyValue: {
     [x: string]: string;
