@@ -26,10 +26,11 @@ const JobSchema = new mongoose.Schema<IJob>(
     jobLocation: {
       type: String,
       required: [true, "Please provide location"],
+      default: "my city",
     },
     jobType: {
       type: String,
-      enum: ["full-time", "part-time", "remote", "intership"],
+      enum: ["full-time", "part-time", "remote", "internship"],
       default: "full-time",
     },
   },
