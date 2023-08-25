@@ -92,6 +92,14 @@ export type IJobPosition = {
 
 export interface IJobQuery {
   search?: string;
+  status?: "all" | StatusTypes;
+  jobType?: string;
+  sort?: string;
+  page?: number;
+}
+
+export interface IMongoJobQuery {
+  createdBy: mongoose.SchemaDefinitionProperty<mongoose.Types.ObjectId>;
   position?: IJobPosition;
   status?: "all" | StatusTypes;
   jobType?: "all" | JobTypes;
