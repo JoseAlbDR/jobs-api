@@ -28,6 +28,7 @@ export interface IUpdateUserRequest extends Request {
 }
 
 export interface IUpdateUser {
+  _id?: string;
   name?: string;
   lastName?: string;
   email?: string;
@@ -56,6 +57,7 @@ export interface IJobRequest extends Request {
 }
 
 export interface IJob {
+  _id?: string;
   company: string;
   position: string;
   jobLocation: string;
@@ -82,6 +84,20 @@ export interface IUpdateJob {
 
 type JobTypes = "full-time" | "part-time" | "remote" | "internship";
 type StatusTypes = "interview" | "declined" | "pending";
+
+export type IJobPosition = {
+  $regex: string;
+  $options: "i";
+};
+
+export interface IJobQuery {
+  search?: string;
+  position?: IJobPosition;
+  status?: "all" | StatusTypes;
+  jobType?: "all" | JobTypes;
+  sort?: string;
+  page?: number;
+}
 
 // Validation interfaces
 export type CustomRequest =
