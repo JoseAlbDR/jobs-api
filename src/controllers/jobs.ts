@@ -10,7 +10,7 @@ import { Job } from "../Models/Job";
 import { NotFoundError } from "../errors";
 
 const getAllJobs = async (req: Request, res: Response) => {
-  const { search, status, jobType } = req.jobQuery;
+  const { search, status, jobType, sort } = req.jobQuery;
 
   const queryObject: IMongoJobQuery = {
     createdBy: req.user.userId,
@@ -31,7 +31,26 @@ const getAllJobs = async (req: Request, res: Response) => {
     queryObject.jobType = jobType;
   }
 
-  const result = Job.find(queryObject);
+  let result = Job.find(queryObject);
+
+  if (sort) {
+    switch (sort) {
+      case "oldest":
+        result = result.sort("-createdAt");
+        break;
+      case "newest":
+        result = result.sort("createdAt");
+        break;
+      case "a-z":
+        result = result.sort("company");
+        break;
+      case "z-a":
+        result = result.sort("-company");
+        break;
+      default:
+        result = result.sort("createdAt");
+    }
+  }
   console.log(result);
   const jobs = await result;
   res.status(StatusCodes.OK).json({ jobs });
