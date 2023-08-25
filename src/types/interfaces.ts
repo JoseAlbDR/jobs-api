@@ -23,6 +23,20 @@ export interface IUpdateJobRequest extends Request {
   body: IUpdateJob;
 }
 
+export interface IUpdateUserRequest extends Request {
+  params: {
+    userId: string;
+  };
+  body: IUpdateUser;
+}
+
+export interface IUpdateUser {
+  name?: string;
+  lastName?: string;
+  email?: string;
+  location?: string;
+}
+
 export interface IUpdateJob {
   company?: string;
   position?: string;
