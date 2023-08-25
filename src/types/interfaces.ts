@@ -24,9 +24,6 @@ export interface IUpdateJobRequest extends Request {
 }
 
 export interface IUpdateUserRequest extends Request {
-  params: {
-    userId: string;
-  };
   body: IUpdateUser;
 }
 
@@ -47,8 +44,10 @@ export type CustomRequest =
   | IRegisterRequest
   | ILoginRequest
   | IJobRequest
-  | IUpdateJobRequest;
-export type CustomBody = ILogin | IUser | IJob | IUpdateJob;
+  | IUpdateJobRequest
+  | IUpdateUser;
+
+export type CustomBody = ILogin | IUser | IJob | IUpdateJob | IUpdateUser;
 
 export interface IUserMethods {
   createJWT(): string;
