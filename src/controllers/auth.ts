@@ -1,8 +1,12 @@
 import { Response } from "express";
-import { ILoginRequest, IRegisterRequest } from "../types/interfaces";
+import {
+  ILoginRequest,
+  IRegisterRequest,
+  IUpdateUserRequest,
+} from "../types/interfaces";
 import { StatusCodes } from "http-status-codes";
 import { User } from "../Models/User";
-import { UnauthenticatedError } from "../errors";
+import { NotFoundError, UnauthenticatedError } from "../errors";
 
 const register = async (req: IRegisterRequest, res: Response) => {
   const user = await User.create(req.body);
@@ -33,17 +37,34 @@ const login = async (req: ILoginRequest, res: Response) => {
   }
 
   const token = user.createJWT();
-  res
-    .status(StatusCodes.OK)
-    .json({
-      user: {
-        name: user.name,
-        email: user.email,
-        lastName: user.lastName,
-        location: user.location,
-        token,
-      },
-    });
+  res.status(StatusCodes.OK).json({
+    user: {
+      name: user.name,
+      email: user.email,
+      lastName: user.lastName,
+      location: user.location,
+      token,
+    },
+  });
 };
 
-export { register, login };
+const updateUser = async (req: IUpdateUserRequest, res: Response) => {
+  const {
+    user: { userId },
+  } = req;
+
+  const userChanges = req.body;
+
+  const user = await User.findOneAndUpdate({ _id: userId }, userChanges, {
+    new: true,
+    runValidators: true,
+  });
+
+  if (!user) {
+    throw new NotFoundError(`No item found with id ${userId}`);
+  }
+
+  res.status(StatusCodes.OK).json({ user });
+};
+
+export { register, login, updateUser };
