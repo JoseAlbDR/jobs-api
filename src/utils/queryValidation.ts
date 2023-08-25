@@ -1,7 +1,7 @@
 import Joi from "joi";
 import { IJobQuery } from "../types/interfaces";
 
-export const validateJobQuery = (query: IJobQuery) => {
+export const validateJobQuery = (query: unknown) => {
   const querySchema = Joi.object<IJobQuery>({
     search: Joi.string().label("Name"),
     status: Joi.string(),
