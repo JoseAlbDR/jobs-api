@@ -33,7 +33,17 @@ const login = async (req: ILoginRequest, res: Response) => {
   }
 
   const token = user.createJWT();
-  res.status(StatusCodes.OK).json({ user: { name: user.name, token } });
+  res
+    .status(StatusCodes.OK)
+    .json({
+      user: {
+        name: user.name,
+        email: user.email,
+        lastName: user.lastName,
+        location: user.location,
+        token,
+      },
+    });
 };
 
 export { register, login };
