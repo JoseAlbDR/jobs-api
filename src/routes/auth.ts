@@ -1,7 +1,7 @@
 import express from "express";
 import { login, register, updateUser } from "../controllers/auth";
 import authenticateUser from "../middleware/authentication";
-import validateBody from "../middleware/joi-validation";
+import { validateBody } from "../middleware/joi-validation";
 import {
   validateLoginData,
   validateRegisterData,
