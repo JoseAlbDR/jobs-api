@@ -75,6 +75,8 @@ export interface IUpdateJob {
   company?: string;
   position?: string;
   status?: StatusTypes;
+  jobType?: JobTypes;
+  jobLocation?: string;
 }
 
 type JobTypes = "full-time" | "part-time" | "remote" | "internship";

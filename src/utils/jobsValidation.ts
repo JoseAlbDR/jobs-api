@@ -24,6 +24,8 @@ export const validateUpdateJobData = <T extends CustomBody>(data: T) => {
     company: Joi.string(),
     position: Joi.string(),
     status: Joi.string(),
+    jobLocation: Joi.string(),
+    jobType: Joi.string(),
   });
 
   return jobSchema.validate(data, {
