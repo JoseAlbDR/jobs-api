@@ -1,9 +1,11 @@
 import express from "express";
-import { login, register } from "../controllers/auth";
+import { login, register, updateUser } from "../controllers/auth";
+import authenticateUser from "../middleware/authentication";
 import validateBody from "../middleware/joi-validation";
 import {
   validateLoginData,
   validateRegisterData,
+  validateUpdateUserData,
 } from "../utils/authValidation";
 import rateLimiter from "express-rate-limit";
 const router = express.Router();
@@ -17,6 +19,12 @@ const authLimiter = rateLimiter({
   legacyHeaders: false,
 });
 
+router.patch(
+  "/updateUser",
+  authenticateUser,
+  validateBody(validateUpdateUserData),
+  updateUser
+);
 router.post("/login", validateBody(validateLoginData), login);
 router.post(
   "/register",
