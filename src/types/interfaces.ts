@@ -58,7 +58,9 @@ export interface IJobRequest extends Request {
 export interface IJob {
   company: string;
   position: string;
+  jobLocation: string;
   status?: StatusTypes;
+  jobType?: JobTypes;
   createdBy?: mongoose.SchemaDefinitionProperty<mongoose.Types.ObjectId>;
 }
 
@@ -75,6 +77,7 @@ export interface IUpdateJob {
   status?: StatusTypes;
 }
 
+type JobTypes = "full-time" | "part-time" | "remote" | "internship";
 type StatusTypes = "interview" | "declined" | "pending";
 
 // Validation interfaces
