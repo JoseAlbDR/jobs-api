@@ -10,7 +10,7 @@ import { Job } from "../Models/Job";
 import { NotFoundError } from "../errors";
 
 const getAllJobs = async (req: Request, res: Response) => {
-  const { search, status, jobType, sort, page } = req.jobQuery;
+  const { search, status, jobType, sort } = req.jobQuery;
 
   const queryObject: IMongoJobQuery = {
     createdBy: req.user.userId,
@@ -36,30 +36,34 @@ const getAllJobs = async (req: Request, res: Response) => {
   if (sort) {
     switch (sort) {
       case "oldest":
-        result = result.sort("-createdAt");
-        break;
-      case "latest":
         result = result.sort("createdAt");
         break;
+      case "latest":
+        result = result.sort("-createdAt");
+        break;
       case "a-z":
-        result = result.sort("company");
+        result = result.sort("position");
         break;
       case "z-a":
-        result = result.sort("-company");
+        result = result.sort("-position");
         break;
       default:
         result = result.sort("createdAt");
     }
   }
 
-  if (page) {
-    const skip = (page - 1) * 10;
-    result = result.skip(skip).limit(10);
-  }
+  const page = req.jobQuery.page || 1;
+  const limit = req.jobQuery.limit || 10;
+  const skip = (page - 1) * limit;
 
-  console.log(result);
+  result = result.skip(skip).limit(limit);
+
   const jobs = await result;
-  res.status(StatusCodes.OK).json({ jobs });
+
+  const totalJobs = await Job.countDocuments(queryObject);
+  const numOfPages = Math.ceil(totalJobs / limit);
+
+  res.status(StatusCodes.OK).json({ jobs, totalJobs, numOfPages });
 };
 
 const getJob = async (req: IJobIdRequest, res: Response) => {
