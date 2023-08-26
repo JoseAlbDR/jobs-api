@@ -96,6 +96,7 @@ export interface IJobQuery {
   jobType?: "all" | JobTypes;
   sort?: string;
   page?: number;
+  limit?: number;
 }
 
 export interface IMongoJobQuery {

@@ -8,6 +8,7 @@ export const validateJobQuery = (query: unknown) => {
     jobType: Joi.string(),
     sort: Joi.string(),
     page: Joi.number(),
+    limit: Joi.number(),
   });
   return querySchema.validate(query, {
     errors: { wrap: { label: false } },
