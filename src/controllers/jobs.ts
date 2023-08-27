@@ -138,9 +138,13 @@ const showStats = async (req: Request, res: Response) => {
     return acc;
   }, {} as IResultStats);
 
-  res
-    .status(StatusCodes.OK)
-    .json({ defaultStats: resultStats, monthlyApplications: [] });
+  const defaultStats: IResultStats = {
+    pending: resultStats.pending || 0,
+    declined: resultStats.declined || 0,
+    interview: resultStats.interview || 0,
+  };
+
+  res.status(StatusCodes.OK).json({ defaultStats, monthlyApplications: [] });
 };
 
 export { getAllJobs, getJob, updateJob, deleteJob, createJob, showStats };
