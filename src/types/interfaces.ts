@@ -35,6 +35,17 @@ export interface IUpdateUser {
   location?: string;
 }
 
+// Stats interfaces
+
+export interface IStats {
+  _id: string;
+  count: number;
+}
+
+export interface IResultStats {
+  [x: string]: number;
+}
+
 // Auth interfaces
 export interface ILoginRequest extends Request {
   body: ILogin;
