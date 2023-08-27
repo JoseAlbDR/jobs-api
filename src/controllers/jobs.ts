@@ -3,6 +3,7 @@ import {
   IJobIdRequest,
   IJobRequest,
   IMongoJobQuery,
+  IMontlyApplications,
   IResultStats,
   IStats,
   IUpdateJobRequest,
@@ -11,6 +12,7 @@ import { StatusCodes } from "http-status-codes";
 import { Job } from "../Models/Job";
 import { NotFoundError } from "../errors";
 import mongoose from "mongoose";
+import moment from "moment";
 
 const getAllJobs = async (req: Request, res: Response) => {
   const { search, status, jobType, sort } = req.jobQuery;
@@ -144,7 +146,35 @@ const showStats = async (req: Request, res: Response) => {
     interview: resultStats.interview || 0,
   };
 
-  res.status(StatusCodes.OK).json({ defaultStats, monthlyApplications: [] });
+  const monthlyApplications: IMontlyApplications[] = await Job.aggregate([
+    { $match: { createdBy: new mongoose.Types.ObjectId(req.user.userId) } },
+    {
+      $group: {
+        _id: { year: { $year: "$createdAt" }, month: { $month: "$createdAt" } },
+        count: { $sum: 1 },
+      },
+    },
+    { $sort: { "_id.year": -1, "_id.month": -1 } },
+    { $limit: 6 },
+  ]);
+
+  const resultMonthlyApplications = monthlyApplications
+    .map((item) => {
+      const {
+        _id: { year, month },
+        count,
+      } = item;
+      const date = moment()
+        .month(month - 1)
+        .year(year)
+        .format("MM Y");
+      return { date, count };
+    })
+    .reverse();
+
+  res
+    .status(StatusCodes.OK)
+    .json({ defaultStats, monthlyApplications: resultMonthlyApplications });
 };
 
 export { getAllJobs, getJob, updateJob, deleteJob, createJob, showStats };
