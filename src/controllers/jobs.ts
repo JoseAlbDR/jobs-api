@@ -123,4 +123,10 @@ const deleteJob = async (req: IJobIdRequest, res: Response) => {
   res.status(StatusCodes.OK).json({ deleteResult });
 };
 
-export { getAllJobs, getJob, updateJob, deleteJob, createJob };
+const showStats = (_req: Request, res: Response) => {
+  res
+    .status(StatusCodes.OK)
+    .json({ defaultStats: {}, monthlyApplications: [] });
+};
+
+export { getAllJobs, getJob, updateJob, deleteJob, createJob, showStats };
