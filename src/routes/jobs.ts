@@ -11,14 +11,14 @@ import {
   validateCreateJobData,
   validateUpdateJobData,
 } from "../utils/jobsValidation";
-import { validateBody, validateQuery } from "../middleware/joi-validation";
+import { validateBody, validateFilters } from "../middleware/joi-validation";
 import { testUser } from "../middleware/testUser";
 
 const router = express.Router();
 
 router
   .route("/")
-  .get(validateQuery, getAllJobs)
+  .get(validateFilters, getAllJobs)
   .post(testUser, validateBody(validateCreateJobData), createJob);
 router
   .route("/:jobId")

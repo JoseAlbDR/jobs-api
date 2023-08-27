@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { validateJobQuery } from "../utils/queryValidation";
+import { validateJobFilters } from "../utils/filtersValidation";
 import { CustomBody, CustomRequest } from "../types/interfaces";
 import { BadRequestError } from "../errors";
 import Joi from "joi";
@@ -24,9 +24,9 @@ const validateBody =
     next();
   };
 
-const validateQuery = (req: Request, _res: Response, next: NextFunction) => {
+const validateFilters = (req: Request, _res: Response, next: NextFunction) => {
   const { query } = req;
-  const valid = validateJobQuery(query);
+  const valid = validateJobFilters(query);
 
   if (valid.error) {
     const messages = valid.error.details.map(
@@ -38,4 +38,4 @@ const validateQuery = (req: Request, _res: Response, next: NextFunction) => {
   return next();
 };
 
-export { validateBody, validateQuery };
+export { validateBody, validateFilters };
