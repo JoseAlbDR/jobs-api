@@ -43,6 +43,9 @@ export interface IStats {
 }
 
 export interface IResultStats {
+  pending: number;
+  interview: number;
+  declined: number;
   [x: string]: number;
 }
 
