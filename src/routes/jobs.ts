@@ -1,27 +1,31 @@
 import express from "express";
-import validateBody from "../middleware/joi-validation";
+
 import {
   getAllJobs,
   getJob,
   deleteJob,
   updateJob,
   createJob,
+  showStats,
 } from "../controllers/jobs";
 import {
   validateCreateJobData,
   validateUpdateJobData,
 } from "../utils/jobsValidation";
+import { validateBody, validateFilters } from "../middleware/joi-validation";
+import { testUser } from "../middleware/testUser";
 
 const router = express.Router();
 
 router
   .route("/")
-  .get(getAllJobs)
-  .post(validateBody(validateCreateJobData), createJob);
+  .get(validateFilters, getAllJobs)
+  .post(testUser, validateBody(validateCreateJobData), createJob);
+router.route("/stats").get(showStats);
 router
   .route("/:jobId")
   .get(getJob)
-  .patch(validateBody(validateUpdateJobData), updateJob)
-  .delete(deleteJob);
+  .patch(testUser, validateBody(validateUpdateJobData), updateJob)
+  .delete(testUser, deleteJob);
 
 export default router;

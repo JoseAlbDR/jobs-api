@@ -1,4 +1,6 @@
-export const jobsData = [
+import { IJob } from "./src/types/interfaces";
+
+export const jobsData: IJob[] = [
   {
     company: "Jones, Cole and Walter",
     position: "Chemical Engineer",

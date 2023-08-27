@@ -19,8 +19,9 @@ const authenticationMiddleware = async (
 
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET) as IDecodedToken;
-    const { userId, username } = payload;
-    req.user = { userId, username };
+    const testUser = payload.userId === "64e867696f3921a7d88cfad8";
+    const { userId } = payload;
+    req.user = { userId, testUser };
     next();
   } catch (error) {
     console.log(error);

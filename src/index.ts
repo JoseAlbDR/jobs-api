@@ -41,13 +41,15 @@ app.use(
 );
 app.use(xss);
 
-app.get("/", (_req, res) => {
-  res.send("<h1>jobs API</h1><a href='/api-docs'>Documentation</a>");
-});
+app.use(express.static("./src/client/build"));
 
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 app.use("/api/v1/jobs", authenticateUser, apiLimiter, jobsRouter);
 app.use("/api/v1/auth", authRouter);
+
+app.get("*", (_req, res) => {
+  res.sendFile("./src/client/build");
+});
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

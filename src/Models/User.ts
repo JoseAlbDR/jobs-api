@@ -25,9 +25,22 @@ const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>({
     required: [true, "Please provide password"],
     minlength: 6,
   },
+  lastName: {
+    type: String,
+    trim: true,
+    maxlength: 20,
+    default: "last name",
+  },
+  location: {
+    type: String,
+    trim: true,
+    maxlength: 20,
+    default: "my city",
+  },
 });
 
-UserSchema.pre<IUser>("save", async function () {
+UserSchema.pre("save", async function () {
+  console.log(this.modifiedPaths());
   const salt = await bcrypt.genSalt(10);
   const hashedPass = await bcrypt.hash(this.password, salt);
   this.password = hashedPass;

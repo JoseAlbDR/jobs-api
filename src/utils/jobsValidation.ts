@@ -1,11 +1,13 @@
 import Joi from "joi";
-import { CustomBody, IJob, IUpdateJob } from "../types/interfaces";
+import { IJob, IUpdateJob } from "../types/interfaces";
 
-export const validateCreateJobData = <T extends CustomBody>(data: T) => {
+export const validateCreateJobData = (data: unknown) => {
   const jobSchema = Joi.object<IJob>({
     company: Joi.string(),
     position: Joi.string(),
     status: Joi.string(),
+    jobLocation: Joi.string(),
+    jobType: Joi.string(),
     createdBy: Joi.string().hex().length(24),
   });
 
@@ -17,11 +19,13 @@ export const validateCreateJobData = <T extends CustomBody>(data: T) => {
   });
 };
 
-export const validateUpdateJobData = <T extends CustomBody>(data: T) => {
+export const validateUpdateJobData = (data: unknown) => {
   const jobSchema = Joi.object<IUpdateJob>({
     company: Joi.string(),
     position: Joi.string(),
     status: Joi.string(),
+    jobLocation: Joi.string(),
+    jobType: Joi.string(),
   });
 
   return jobSchema.validate(data, {
