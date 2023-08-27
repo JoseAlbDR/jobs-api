@@ -1,3 +1,4 @@
+## GENERATED WITH AI
 
 <div align="center">
 <h1 align="center">
@@ -22,6 +23,7 @@
 ---
 
 ## 📒 Table of Contents
+
 - [📒 Table of Contents](#-table-of-contents)
 - [📍 Overview](#-overview)
 - [⚙️ Features](#-features)
@@ -35,7 +37,6 @@
 
 ---
 
-
 ## 📍 Overview
 
 The project is a job management API built with Node.js, Express, and MongoDB. It allows users to register, login, create, update, and delete job listings. The API also provides authentication and authorization using JWT tokens. Its value lies in providing a secure and scalable solution for managing job data with user access control.
@@ -44,26 +45,18 @@ The project is a job management API built with Node.js, Express, and MongoDB. It
 
 ## ⚙️ Features
 
-| Feature                | Description                                                                                                                                              |
-| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **⚙️ Architecture**     | The codebase follows a typical server-side architecture, where an Express server acts as the API backend with separate routes, controllers, and models. |
-| **📖 Documentation**   | The codebase includes well-documented code snippets and clear inline comments, making it easy to understand and maintain.                                 |
-| **🔗 Dependencies**    | The system relies on external libraries and tools such as Express, Mongoose, bcrypt, and Joi for various functionalities and error handling.            |
-| **🧩 Modularity**      | The codebase is organized into smaller components such as controllers, middleware, routes, errors, models, and utility functions for better reusability. |
-| **✔️ Testing**          | Without specific information mentioned, it is assumed that there is no explicit information or codebase reference related to the testing strategies. |
-| **⚡️ Performance**      | Without specific information mentioned related to optimization or performance measurement, no conclusive remark can be made.                           |
+| Feature                | Description                                                                                                                                                                            |
+| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **⚙️ Architecture**    | The codebase follows a typical server-side architecture, where an Express server acts as the API backend with separate routes, controllers, and models.                                |
+| **📖 Documentation**   | The codebase includes well-documented code snippets and clear inline comments, making it easy to understand and maintain.                                                              |
+| **🔗 Dependencies**    | The system relies on external libraries and tools such as Express, Mongoose, bcrypt, and Joi for various functionalities and error handling.                                           |
+| **🧩 Modularity**      | The codebase is organized into smaller components such as controllers, middleware, routes, errors, models, and utility functions for better reusability.                               |
+| **✔️ Testing**         | Without specific information mentioned, it is assumed that there is no explicit information or codebase reference related to the testing strategies.                                   |
+| **⚡️ Performance**    | Without specific information mentioned related to optimization or performance measurement, no conclusive remark can be made.                                                           |
 | **🔐 Security**        | The system addresses security concerns by implementing authentication, password hashing, error handling for unauthorized requests, and sanitization of user input against XSS attacks. |
-| **🔀 Version Control** | Git is used as the version control system, allowing easy collaboration, bug fixing, feature development, and maintainability.                               |
-| **🔌 Integrations**    | There are no defined integrations with other systems mentioned in the given codebase.                                                                     |
-| **📶 Scalability**     | While there is no direct mention of architecture scalability, the codebase's modular design and proper separation of concerns enable handling growth efficiently.          |
-
----
-
-
-## 📂 Project Structure
-
-
-
+| **🔀 Version Control** | Git is used as the version control system, allowing easy collaboration, bug fixing, feature development, and maintainability.                                                          |
+| **🔌 Integrations**    | There are no defined integrations with other systems mentioned in the given codebase.                                                                                                  |
+| **📶 Scalability**     | While there is no direct mention of architecture scalability, the codebase's modular design and proper separation of concerns enable handling growth efficiently.                      |
 
 ---
 
@@ -72,7 +65,7 @@ The project is a job management API built with Node.js, Express, and MongoDB. It
 <details closed><summary>Root</summary>
 
 | File                                                                                                  | Summary                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| ---                                                                                                   | ---                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| ----------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [.eslintrc](https://github.com/JoseAlbDR/jobs-api/blob/main/.eslintrc)                                | This code snippet provides a comprehensive set of rules and configuration options for ESLint and TypeScript. It includes recommended rules, plugins, and parser options, ensuring code quality and adherence to best practices.                                                                                                                                                                                                                           |
 | [index.ts](https://github.com/JoseAlbDR/jobs-api/blob/main/src\index.ts)                              | This code initializes an Express server with various middleware, including error handling and API rate limiting. It also sets up routes for authentication and CRUD operations on jobs. The server is connected to a database and serves Swagger documentation.                                                                                                                                                                                           |
 | [auth.ts](https://github.com/JoseAlbDR/jobs-api/blob/main/src\controllers\auth.ts)                    | The provided code snippet contains two functions, "register" and "login", responsible for handling registration and authentication processes. The "register" function creates a new user based on the request body, generates a token, and sends a response with the user name and token. The "login" function checks if a user exists with the given email, verifies the password, generates a token, and sends a response with the user name and token. |
@@ -103,26 +96,22 @@ The project is a job management API built with Node.js, Express, and MongoDB. It
 
 ## 🚀 Getting Started
 
-### ✔️ Prerequisites
-
-Before you begin, ensure that you have the following prerequisites installed:
-> - `ℹ️ Requirement 1`
-> - `ℹ️ Requirement 2`
-> - `ℹ️ ...`
-
 ### 📦 Installation
 
 1. Clone the jobs-api repository:
+
 ```sh
 git clone https://github.com/JoseAlbDR/jobs-api
 ```
 
 2. Change to the project directory:
+
 ```sh
 cd jobs-api
 ```
 
 3. Install the dependencies:
+
 ```sh
 npm install
 ```
@@ -134,53 +123,39 @@ npm run build && node dist/main.js
 ```
 
 ### 🧪 Running Tests
+
 ```sh
 npm test
 ```
 
 ---
 
-
-## 🗺 Roadmap
-
-> - [X] `ℹ️  Task 1: Implement X`
-> - [ ] `ℹ️  Task 2: Refactor Y`
-> - [ ] `ℹ️ ...`
-
-
----
-
 ## 🤝 Contributing
 
 Contributions are always welcome! Please follow these steps:
+
 1. Fork the project repository. This creates a copy of the project on your account that you can modify without affecting the original project.
 2. Clone the forked repository to your local machine using a Git client like Git or GitHub Desktop.
 3. Create a new branch with a descriptive name (e.g., `new-feature-branch` or `bugfix-issue-123`).
+
 ```sh
 git checkout -b new-feature-branch
 ```
+
 4. Make changes to the project's codebase.
 5. Commit your changes to your local branch with a clear commit message that explains the changes you've made.
+
 ```sh
 git commit -m 'Implemented new feature.'
 ```
+
 6. Push your changes to your forked repository on GitHub using the following command
+
 ```sh
 git push origin new-feature-branch
 ```
+
 7. Create a new pull request to the original project repository. In the pull request, describe the changes you've made and why they're necessary.
-The project maintainers will review your changes and provide feedback or merge them into the main branch.
-
----
-
-## 📄 License
-
-This project is licensed under the `ℹ️  INSERT-LICENSE-TYPE` License. See the [LICENSE](https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/adding-a-license-to-a-repository) file for additional info.
-
----
-
-## 👏 Acknowledgments
-
-> - `ℹ️  List any resources, contributors, inspiration, etc.`
+   The project maintainers will review your changes and provide feedback or merge them into the main branch.
 
 ---
