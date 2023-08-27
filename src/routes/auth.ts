@@ -8,6 +8,7 @@ import {
   validateUpdateUserData,
 } from "../utils/authValidation";
 import rateLimiter from "express-rate-limit";
+import { testUser } from "../middleware/testUser";
 const router = express.Router();
 
 const authLimiter = rateLimiter({
@@ -22,6 +23,7 @@ const authLimiter = rateLimiter({
 router.patch(
   "/updateUser",
   authenticateUser,
+  testUser,
   validateBody(validateUpdateUserData),
   updateUser
 );

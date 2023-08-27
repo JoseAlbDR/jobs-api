@@ -12,17 +12,18 @@ import {
   validateUpdateJobData,
 } from "../utils/jobsValidation";
 import { validateBody, validateQuery } from "../middleware/joi-validation";
+import { testUser } from "../middleware/testUser";
 
 const router = express.Router();
 
 router
   .route("/")
   .get(validateQuery, getAllJobs)
-  .post(validateBody(validateCreateJobData), createJob);
+  .post(testUser, validateBody(validateCreateJobData), createJob);
 router
   .route("/:jobId")
   .get(getJob)
-  .patch(validateBody(validateUpdateJobData), updateJob)
-  .delete(deleteJob);
+  .patch(testUser, validateBody(validateUpdateJobData), updateJob)
+  .delete(testUser, deleteJob);
 
 export default router;
