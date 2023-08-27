@@ -3,11 +3,14 @@ import {
   IJobIdRequest,
   IJobRequest,
   IMongoJobQuery,
+  IResultStats,
+  IStats,
   IUpdateJobRequest,
 } from "../types/interfaces";
 import { StatusCodes } from "http-status-codes";
 import { Job } from "../Models/Job";
 import { NotFoundError } from "../errors";
+import mongoose from "mongoose";
 
 const getAllJobs = async (req: Request, res: Response) => {
   const { search, status, jobType, sort } = req.jobQuery;
@@ -123,10 +126,21 @@ const deleteJob = async (req: IJobIdRequest, res: Response) => {
   res.status(StatusCodes.OK).json({ deleteResult });
 };
 
-const showStats = (_req: Request, res: Response) => {
+const showStats = async (req: Request, res: Response) => {
+  const stats: IStats[] = await Job.aggregate([
+    { $match: { createdBy: new mongoose.Types.ObjectId(req.user.userId) } },
+    { $group: { _id: "$status", count: { $sum: 1 } } },
+  ]);
+
+  const resultStats = stats.reduce((acc, curr) => {
+    const { _id: title, count } = curr;
+    acc[title] = count;
+    return acc;
+  }, {} as IResultStats);
+
   res
     .status(StatusCodes.OK)
-    .json({ defaultStats: {}, monthlyApplications: [] });
+    .json({ defaultStats: resultStats, monthlyApplications: [] });
 };
 
 export { getAllJobs, getJob, updateJob, deleteJob, createJob, showStats };
