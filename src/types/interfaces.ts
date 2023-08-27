@@ -49,6 +49,11 @@ export interface IResultStats {
   [x: string]: number;
 }
 
+export interface IMontlyApplications {
+  _id: { year: number; month: number };
+  count: number;
+}
+
 // Auth interfaces
 export interface ILoginRequest extends Request {
   body: ILogin;
